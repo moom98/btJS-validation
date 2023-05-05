@@ -6,6 +6,11 @@ function AppModel(attrs) {
     required: "",
     maxlength: 8,
     minlength: 4,
+    number: "",
+    uppercase: "",
+    lowercase: "",
+    firstNotZero: "",
+    symbol: ""
   }
 
   // バリデーションの結果を格納する配列を初期化する
@@ -55,7 +60,30 @@ AppModel.prototype.minlength = function (num) {
   return num <= this.val.length;
 }
 
+// 値に数字が含まれているかどうかを判定する
+AppModel.prototype.number = function () {
+  return /[0-9]/.test(this.val);
+}
 
+// 値に英字の大文字が含まれているかを確認する
+AppModel.prototype.uppercase = function () {
+  return /[A-Z]/.test(this.val);
+}
+
+// 値に英字の小文字が含まれているかを確認する
+AppModel.prototype.lowercase = function () {
+  return /[a-z]/.test(this.val);
+}
+
+// 値の1文字目が0ではないかを確認する
+AppModel.prototype.firstNotZero = function () {
+  return this.val[0] !== "0";
+}
+
+// _以外の記号が使われていないかを確認する
+AppModel.prototype.symbol = function () {
+  return !/[ -/:-@[-^'{-~]/.test(this.val);
+}
 
 AppModel.prototype.validate = function () {
   let val;
